@@ -6,6 +6,13 @@ import org.junit.jupiter.api.Test;
 import javax.annotation.meta.When;
 
 public class VideoGameTests extends VideoGameConfig {
+    String gameBodyJson = "{\n" +
+            "  \"category\": \"Platform\",\n" +
+            "  \"name\": \"Mario\",\n" +
+            "  \"rating\": \"Mature\",\n" +
+            "  \"releaseDate\": \"2023-01-25\",\n" +
+            "  \"reviewScore\": 89\n" +
+            "}";
 
      @Test
      public void getAllGames () {
@@ -16,13 +23,7 @@ public class VideoGameTests extends VideoGameConfig {
      @Test
     public  void  createNewGameByJson(){
 
-         String gameBodyJson = "{\n" +
-                 "  \"category\": \"Platform\",\n" +
-                 "  \"name\": \"Mario\",\n" +
-                 "  \"rating\": \"Mature\",\n" +
-                 "  \"releaseDate\": \"2023-01-25\",\n" +
-                 "  \"reviewScore\": 89\n" +
-                 "}";
+
              RestAssured.given()
                      .body(gameBodyJson)
                      .when()
@@ -49,7 +50,16 @@ public class VideoGameTests extends VideoGameConfig {
                   .then();
 
 
+       }
 
+       @Test
+       public void updateGame(){
+
+         RestAssured.given()
+                   .body(gameBodyJson)
+                   .when()
+                   .put("videogame/3")
+                   .then();
        }
 
  }
