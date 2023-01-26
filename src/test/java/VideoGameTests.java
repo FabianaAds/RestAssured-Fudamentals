@@ -62,4 +62,19 @@ public class VideoGameTests extends VideoGameConfig {
                    .then();
        }
 
+       @Test
+       public  void deleteGame(){
+           RestAssured.given()
+                   .accept("text/plain")
+                   .when()
+                   .delete("videogame/8")
+                   .then();
+
+
+
+       }
+
+
+
+
  }
