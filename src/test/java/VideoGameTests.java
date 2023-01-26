@@ -70,6 +70,15 @@ public class VideoGameTests extends VideoGameConfig {
                    .delete("videogame/8")
                    .then();
 
+       }
+       @Test
+       public void  getSingleGame(){
+
+          RestAssured.given()
+                  .pathParam("videoGameId",8)
+                  .when()
+                  .get(VideoGameEndPoints.SINGLE_VIDEO_GAME)
+                  .then();
 
 
        }
