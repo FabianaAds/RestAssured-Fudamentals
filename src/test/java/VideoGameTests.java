@@ -16,7 +16,7 @@ public class VideoGameTests extends VideoGameConfig {
      @Test
     public  void  createNewGameByJson(){
 
-         String createBodyJson = "{\n" +
+         String gameBodyJson = "{\n" +
                  "  \"category\": \"Platform\",\n" +
                  "  \"name\": \"Mario\",\n" +
                  "  \"rating\": \"Mature\",\n" +
@@ -24,11 +24,32 @@ public class VideoGameTests extends VideoGameConfig {
                  "  \"reviewScore\": 89\n" +
                  "}";
              RestAssured.given()
-                     .body(createBodyJson)
+                     .body(gameBodyJson)
                      .when()
                      .post(VideoGameEndPoints.ALL_VIDEO_GAMES)
                      .then().assertThat().statusCode(200);
      }
 
+       @Test
+       public void createNewGameXML(){
+
+         String gameBodyxml = "<VideoGame category=\"string\">\n" +
+                 "\t<id>0</id>\n" +
+                 "\t<name>string</name>\n" +
+                 "\t<rating>string</rating>\n" +
+                 "\t<releaseDate>string</releaseDate>\n" +
+                 "\t<reviewScore>0</reviewScore>\n" +
+                 "</VideoGame>";
+          RestAssured.given()
+                  .body(gameBodyxml)
+                  .contentType("application/xml")
+                  .accept("application/xml")
+                  .when()
+                  .post(VideoGameEndPoints.ALL_VIDEO_GAMES)
+                  .then();
+
+
+
+       }
 
  }
