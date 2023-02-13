@@ -1,8 +1,11 @@
 import Config.FootBallConfig;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import io.restassured.specification.Argument;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -57,11 +60,30 @@ public class FootballTests extends FootBallConfig {
       }
 
       @Test
-       public  void getAllTeamsData (){
+       public  void getAllTeamData (){
 
         String responseBody =  RestAssured.get("teams/57").asString();
           System.out.println(responseBody);
       }
+
+      @Test
+       public  void  getAllTeamData_DoCheckFirst(){
+
+        Response response =
+          RestAssured.given()
+                     .when()
+                     .get("teams/57")
+                     .then()
+                     .contentType(ContentType.JSON)
+                     .extract().response();
+
+
+                    String  jsonResponseAsString =  response.asString();
+                   System.out.println(jsonResponseAsString);
+
+      }
+
+
     }
 
 
