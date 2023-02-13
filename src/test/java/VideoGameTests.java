@@ -1,6 +1,7 @@
 import Config.VideoGameConfig;
 import Config.VideoGameEndPoints;
 import io.restassured.RestAssured;
+import objects.VideoGame;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.meta.When;
@@ -83,6 +84,19 @@ public class VideoGameTests extends VideoGameConfig {
 
        }
 
+       @Test
+       public  void  testVideoGameSerializationByJson(){
+
+              VideoGame videoGame =  new VideoGame("Shgoter", "MyAwesomeGame", "Mature", "2018-04-04", 99);
+
+                  RestAssured.given()
+                          .body(videoGame)
+                          .when()
+                          .post(VideoGameEndPoints.ALL_VIDEO_GAMES)
+                          .then();
+
+
+       }
 
 
 
