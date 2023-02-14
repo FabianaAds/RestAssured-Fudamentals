@@ -9,6 +9,8 @@ package objects;
         private String releaseDate;
         private Integer reviewScore;
 
+        private  Integer id;
+
         /**
          * No args constructor for use in serialization
          *
@@ -72,5 +74,8 @@ package objects;
         public void setReviewScore(Integer reviewScore) {
             this.reviewScore = reviewScore;
         }
+         public   Integer getId(){ return  id; }
+
+        public  void  setId (Integer id) {this.id = id; }
 
     }
