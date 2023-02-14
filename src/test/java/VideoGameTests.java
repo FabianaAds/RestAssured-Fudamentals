@@ -1,6 +1,8 @@
 import Config.VideoGameConfig;
 import Config.VideoGameEndPoints;
 import io.restassured.RestAssured;
+import io.restassured.matcher.RestAssuredMatchers;
+import io.restassured.response.ValidatableResponse;
 import objects.VideoGame;
 import org.junit.jupiter.api.Test;
 
@@ -85,7 +87,7 @@ public class VideoGameTests extends VideoGameConfig {
        }
 
        @Test
-       public  void  testVideoGameSerializationByJson(){
+        public  void  testVideoGameSerializationByJson(){
 
               VideoGame videoGame =  new VideoGame("Shgoter", "MyAwesomeGame", "Mature", "2018-04-04", 99);
 
@@ -97,6 +99,28 @@ public class VideoGameTests extends VideoGameConfig {
 
 
        }
+
+       @Test
+       public  void  TestVideoGameSchemaXML(){
+                       RestAssured
+                               .given()
+                               .pathParam("videoGameId", 5)
+                               .accept("application/xml")
+                               .when()
+                               .get(VideoGameEndPoints.SINGLE_VIDEO_GAME)
+                               .then()
+                               .body(RestAssuredMatchers.matchesXsdInClasspath("VideoGameXsd.xsd"));
+
+
+
+
+
+       }
+
+
+
+
+
 
 
 
