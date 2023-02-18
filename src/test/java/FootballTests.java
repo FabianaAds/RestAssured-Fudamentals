@@ -2,13 +2,10 @@ import Config.FootBallConfig;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.Argument;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.engine.support.discovery.SelectorResolver;
 
-import java.sql.SQLOutput;
 import java.util.List;
-
+import static io.restassured.RestAssured.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class FootballTests extends FootBallConfig {
@@ -16,7 +13,7 @@ public class FootballTests extends FootBallConfig {
 
     @Test
     public void getDetailsOfOneArea() {
-        RestAssured.given()
+                given()
                 .queryParam("areas", 2076)
                 .when()
                 .get("/areas");
@@ -27,7 +24,7 @@ public class FootballTests extends FootBallConfig {
     public void getDetailsOfMultipleAreas() {
 
         String areaIds = "2076,2077,2088";
-         RestAssured.given()
+                 given()
                  .urlEncodingEnabled(false)
                  .queryParam("areas",areaIds)
                  .when()
@@ -40,8 +37,8 @@ public class FootballTests extends FootBallConfig {
 
     public void getDateFounded (){
 
-        RestAssured.given()
-                   .when()
+                  given()
+                .when()
                 .get("teams/57")
                 .then()
                 .body("founded", equalTo(1886));

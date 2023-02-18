@@ -4,11 +4,11 @@ import io.restassured.RestAssured;
 import io.restassured.matcher.RestAssuredMatchers;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 import objects.VideoGame;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import static io.restassured.RestAssured.*;
 
-import javax.annotation.meta.When;
 
 public class VideoGameTests extends VideoGameConfig {
     String gameBodyJson = "{\n" +
@@ -22,14 +22,14 @@ public class VideoGameTests extends VideoGameConfig {
      @Test
      public void getAllGames () {
 
-         RestAssured.given().when().get(VideoGameEndPoints.ALL_VIDEO_GAMES).then();
+        given().when().get(VideoGameEndPoints.ALL_VIDEO_GAMES).then();
      }
 
      @Test
     public  void  createNewGameByJson(){
 
 
-             RestAssured.given()
+                      given()
                      .body(gameBodyJson)
                      .when()
                      .post(VideoGameEndPoints.ALL_VIDEO_GAMES)
@@ -128,26 +128,36 @@ public class VideoGameTests extends VideoGameConfig {
 
 
        }
-       @Test
-        public  void TestVideoGameSchemaJson(){
-                     RestAssured
-                             .given()
-                             .pathParam("videoGameId", 5)
-                             .accept("application/json")
-                             .when()
-                             .get(VideoGameEndPoints.SINGLE_VIDEO_GAME)
-                             .then()
-                             .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("VideoGameJsonSchema.json"));
+    @Test
+    public void testVideoGameSchemaJSON(){
+
+                 given()
+                .pathParam("videoGameId", 5)
+                .accept("application/json")
+                .when()
+                .get(VideoGameEndPoints.SINGLE_VIDEO_GAME)
+                .then()
+                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("VideoGameJsonSchema.json"));
+    }
+           @Test
+          public  void  captureResponseTime () {
+                      long responseTime =  RestAssured.get (VideoGameEndPoints.ALL_VIDEO_GAMES).time();
+                      System.out.println("Response time in MS: " + responseTime);
+
+
+           }
+
+           @Test
+          public  void  assertOnResponseTime() {
+                       RestAssured
+                               .get(VideoGameEndPoints.ALL_VIDEO_GAMES)
+                               .then().time(Matchers.lessThan(1000L));
 
 
 
-       }
+           }
 
 
 
 
-
-
-
-
- }
+}
