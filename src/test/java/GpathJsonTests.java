@@ -38,4 +38,25 @@ public class GpathJsonTests  extends FootBallConfig {
 
     }
 
+
+    @Test
+      public  void   extractSingleValueWhitHighestNumber() {
+            Response response = get("teams/57");
+             String  playerName =  response.path("squad.max {it.id }.name");
+            System.out.println("Player with Highest  : id " + playerName);
+
+
+    }
+
+    @Test
+      public  void  extractMultipleValuesAndSumThem(){
+              Response response = get("teams/57");
+               int  sumOfIds = response.path("squad.collect { it.id }.sum()");
+          System.out.println(" Sum of  all Ids:  " + sumOfIds);
+
+
+
+
+    }
+
 }
