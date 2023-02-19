@@ -48,4 +48,15 @@ public class GpathJsonTests  extends FootBallConfig {
 
     }
 
+    @Test
+      public  void  extractMultipleValuesAndSumThem(){
+              Response response = get("teams/57");
+               int  sumOfIds = response.path("squad.collect { it.id }.sum()");
+          System.out.println(" Sum of  all Ids:  " + sumOfIds);
+
+
+
+
+    }
+
 }
