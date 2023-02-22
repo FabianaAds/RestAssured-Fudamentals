@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.*;
+
 
 public class GpathXMLTest  extends VideoGameConfig {
 
@@ -58,8 +59,8 @@ public class GpathXMLTest  extends VideoGameConfig {
 
     @Test
      public  void  getSingleNode() {
-         String resposeAsString = get(VideoGameEndPoints.ALL_VIDEO_GAMES).asString();
-          Node videoGame = XmlPath.from(resposeAsString).get(
+         String responseAsString = get(VideoGameEndPoints.ALL_VIDEO_GAMES).asString();
+          Node videoGame = XmlPath.from(responseAsString).get(
 
                   "List.item.find{ game-> def  name = game.name; name == 'Tetris' } "
           );
@@ -69,6 +70,31 @@ public class GpathXMLTest  extends VideoGameConfig {
 
 
     }
+
+    @Test
+        public void getSingleElementDepthFirstSearch()  {
+        String responseAsString = get(VideoGameEndPoints.ALL_VIDEO_GAMES).asString();
+
+         int reviewScore = XmlPath.from(responseAsString).getInt("**.find { it.name == 'Gran Turismo 3' }.reviewScore");
+
+        System.out.println(reviewScore);
+
+
+    }
+
+    @Test
+       public  void getAllNodesBasedOnCondition(){
+
+         String responseAsString =  get (VideoGameEndPoints.ALL_VIDEO_GAMES).asString();
+          int reviewScore = 90;
+          List<Node> allVideoGamesOverCertainScore = XmlPath.from(responseAsString) .get("List.item.findAll { it.reviewScore.toFloat() >=  " + reviewScore + " }");
+
+
+
+        System.out.println(allVideoGamesOverCertainScore);
+
+    }
+
 
 
 }

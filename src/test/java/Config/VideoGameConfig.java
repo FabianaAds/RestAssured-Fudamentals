@@ -21,7 +21,7 @@ public class VideoGameConfig {
                 .setBaseUri("https://videogamedb.uk/")
                 .setBasePath ("api/v2/")
                 .setContentType("application/json")
-                .addHeader("Accept","application/xml")
+                .addHeader("Accept","application/json")
                 .addFilter(new RequestLoggingFilter())
                 .addFilter(new ResponseLoggingFilter())
                 .build();
